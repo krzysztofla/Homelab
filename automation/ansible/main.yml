@@ -1,0 +1,10 @@
+---
+- hosts: 
+  - ziqqnode00
+  - ziqqnode01
+  - ziqqnode02
+
+  tasks:
+    - name: Configure Homelab infrastructure
+      include_tasks:
+        file: ./playbooks/infrastructure/main.yml

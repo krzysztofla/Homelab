@@ -1,0 +1,4 @@
+---
+  - name: Test connectivity
+    debug:
+      msg: testing connection
