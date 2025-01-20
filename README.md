@@ -14,3 +14,10 @@ Nodes:
 
 Power:
     - Qoltec PDU 10"
+
+## Infrastructure
+I decided to provision my infrastructure as k3s cluster. If you want to find more about my lab architecture please go to [MY Cluster](./docs/INFRASTRUCTURE.md)
+
+## Automation
+
+For automation currently I'm using Ansible to configure and manage my nodes. When I'll provision AKS than I'll add automation for that part. 
