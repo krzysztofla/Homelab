@@ -1,0 +1,81 @@
+---
+- name: Update apt resources
+  remote_user: ziqq
+  become: true 
+  apt:
+    name: "*"
+    state: latest
+  
+- name: install dependencies
+  remote_user: ziqq
+  become: true
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+
+- name: add GPG key
+  remote_user: ziqq
+  become: true
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker repository to apt
+  remote_user: ziqq
+  become: true
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: install docker
+  remote_user: ziqq
+  become: true
+  apt:
+    name: "{{item}}"
+    state: latest
+    update_cache: yes
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - docker-compose
+    - containerd.io
+
+- name: Check docker is active
+  remote_user: ziqq
+  become: true
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Ensure group "docker" exists
+  group:
+    name: docker
+    state: present
+
+- name: Adding ubuntu to docker group
+  remote_user: ziqq
+  become: true
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
+- name: Get info on docker host
+  remote_user: ziqq
+  become: true
+  community.docker.docker_host_info:
+  register: result
+
+- name: Show host information
+  remote_user: ziqq
+  become: true
+  ansible.builtin.debug:
+    var: result.host_info

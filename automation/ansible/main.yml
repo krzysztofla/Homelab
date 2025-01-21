@@ -5,6 +5,6 @@
   - ziqqnode02
 
   tasks:
-    - name: Configure Homelab infrastructure
+    - name: Install Docker in Homelab nodes
       include_tasks:
-        file: ./playbooks/infrastructure/main.yml
+        file: ./playbooks/infrastructure/docker.yml
