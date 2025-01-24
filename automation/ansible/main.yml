@@ -8,3 +8,11 @@
     - name: Install Docker in Homelab nodes
       include_tasks:
         file: ./playbooks/infrastructure/docker.yml
+      when: 
+        install_docker == True and istall_docker is defined
+    
+    - name: Install K3S Server
+      include_tasks:
+        file: ./playbooks/infrastructure/k3s_server.yml
+      when:
+        hostname == "ziqqnode01" ans hostname is defined
