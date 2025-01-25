@@ -1,0 +1,7 @@
+---
+  # Server token should be private and hidden behind Vault - for homelab simplicity I'm making it visible
+  - name: Install K3S agents instance for nodes
+    remote_user: ziqq
+    become: true
+    shell: |
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="agent --server https://192.168.1.11:6443 --token <PLACE_TOKEN_HERE>" sh -s - 
