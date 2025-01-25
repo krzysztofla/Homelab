@@ -1,2 +1,8 @@
 ---
-  
+  # Server token should be private and hidden behind Vault - for homelab simplicity I'm making it visible
+  - name: Install K3S server instance for master node
+    delegate_to: 192.168.1.11
+    remote_user: ziqq
+    become: true
+    shell: |
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --flannel-backend none --token ZiqqToken4321 

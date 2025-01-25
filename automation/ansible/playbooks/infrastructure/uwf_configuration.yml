@@ -1,0 +1,12 @@
+---
+  - name: Configure firewall rules for nodes communication
+    remote_user: ziqq
+    become: yes
+    shell: |
+      ufw allow 6443/tcp #apiserver
+      ufw allow from 192.168.1.10/16 to any #pods
+      ufw allow from 192.168.1.10/16 to any #services
+      ufw allow from 192.168.1.11/16 to any #pods
+      ufw allow from 192.168.1.11/16 to any #services
+      ufw allow from 192.168.1.21/16 to any #pods
+      ufw allow from 192.168.1.21/16 to any #services

@@ -1,18 +1,24 @@
 ---
-- hosts: 
-  - ziqqnode00
-  - ziqqnode01
-  - ziqqnode02
+- hosts:
+    - ziqqnode00
+    - ziqqnode01
+    - ziqqnode02
 
   tasks:
+    - name: Configure firewall
+      include_tasks:
+        file: ./playbooks/infrastructure/uwf_configuration.yml
+      when: confifgure_firewall == true
+
     - name: Install Docker in Homelab nodes
       include_tasks:
         file: ./playbooks/infrastructure/docker.yml
-      when: 
-        install_docker == True and istall_docker is defined
-    
+      when: install_docker == true
+
+    - name: Debug vars
+      debug: "msg=Mosh Version: '{{ install_k3s_server.stdout }}'"
+
     - name: Install K3S Server
       include_tasks:
         file: ./playbooks/infrastructure/k3s_server.yml
-      when:
-        hostname == "ziqqnode01" ans hostname is defined
+      when: install_k3s_server == true
