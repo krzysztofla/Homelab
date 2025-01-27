@@ -15,10 +15,10 @@
         file: ./playbooks/infrastructure/docker.yml
       when: install_docker == true
 
-    # - name: Install K3S Server
-    #   include_tasks:
-    #     file: ./playbooks/infrastructure/k3s_server.yml
-    #   when: ansible_hostname == 'ziqqnode00' and install_k3s_server==true
+    - name: Install K3S Server
+      include_tasks:
+        file: ./playbooks/infrastructure/k3s_server.yml
+      when: ansible_hostname == 'ziqqnode00' and install_k3s_server==true
 
     - name: Install K3S Agent on Node01
       include_tasks:
