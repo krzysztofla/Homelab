@@ -1,0 +1,11 @@
+---
+- hosts:
+    - ziqqnode00
+    - ziqqnode01
+    - ziqqnode02
+
+  tasks:
+    - name: Label Nodes
+      include_tasks: 
+        file: ./playbooks/post_installation/label_nodes.yml
+      when: ansible_hostname == 'ziqqnode01'
