@@ -4,4 +4,4 @@
     remote_user: ziqq
     become: true
     shell: |
-      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="agent --server https://192.168.1.11:6443 --token <PLACE_TOKEN_HERE>" sh -s - 
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="agent --server https://192.168.1.140:6443 --token <TOKEN>" sh -s - 
