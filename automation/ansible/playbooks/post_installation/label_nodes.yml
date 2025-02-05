@@ -1,0 +1,7 @@
+---
+  - name: Label agent nodes as worker nodes
+    remote_user: ziqq
+    become: true
+    shell: |
+      kubectl label node ziqqnode01 node-role.kubernetes.io/worker=worker
+      kubectl label node ziqqnode02 node-role.kubernetes.io/worker=worker
