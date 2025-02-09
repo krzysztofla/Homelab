@@ -77,4 +77,39 @@ helm repo add longhorn https://charts.longhorn.io
 helm repo update
 helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --set defaultSettings.defaultDataPath="/storage"
 ```
+
+6. Create a Longhorn service as Load Balancer to expose Longhorn UI.
+```bash
+kubectl apply -f ./charts/longhorn_service.yml
+```
+Now after creating entry point, the UI is browsable trough exposed IP adress:
+![LonghornUI](../assets/longhorn/dashboard.jpg)
+
+
+7. Make the longhorn storage as default for volumes
+```bash
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+```
+This should result as assigning 'default' to longhorn storage class
+```bash
+kubectl get storageclass
+
+NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+local-path           rancher.io/local-path   Delete          WaitForFirstConsumer   false                  5d1h
+longhorn (default)   driver.longhorn.io      Delete          Immediate              true                   12h
+longhorn-static      driver.longhorn.io      Delete          Immediate              true                   12h
+```
+
+8. Now let's check if PVC is creating Volumes on disks
+```bash
+kubectl apply -f ./charts/longhorn_volumes_test.yml  
+```
+Let's check results via shell or by browsing Longhorn UI:
+```bash
+kubectl get pvc -A 
+
+NAMESPACE   NAME       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+default     test-pvc   Bound    pvc-6360bbf6-39ad-4c70-99bb-7a68b1329af6   5Gi        RWO            longhorn       <unset>                 3m29s
+```
+![LonghornUI](../assets/longhorn/volumes_test.png)
 [Back - Homepage](../README.md)
