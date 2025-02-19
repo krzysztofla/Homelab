@@ -38,6 +38,9 @@ One USB 64GB Drive per Node for persistent volume to gather logs. This is manage
 
 ## Monitoring
 Who want's some cool looking dashboards? Obviously Prometheus + Grafana
+### Prometheus
+![Prometheus](./assets/prometheus/1.png)
+![Prometheus](./assets/prometheus/2.png)
 
 ## Automation
 For automation currently I'm using Ansible to configure and manage my nodes. When I'll provision AKS than I'll add automation for that part. 
