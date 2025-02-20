@@ -17,6 +17,9 @@ Nodes:
 Power:
     - Qoltec PDU 10"
 
+Accesories: 
+    - 2x 64GB USB mini (one per worker node)
+
 ## Goals
 - Keep as much as possible inside the cluster
 - Moore to come... 
@@ -26,19 +29,25 @@ I decided to provision my infrastructure as k3s cluster. If you want to find mor
 
 ## Network
 I would like to have one entry point to my Homelab cluster as most of the time we have when using managed cloud kubernetes services. Because normaly that would be external component I decided to use MetalLB Load Balancer.
-#### What is MetalLB
-"Kubernetes does not offer an implementation of network load balancers (Services of type LoadBalancer) for bare-metal clusters. The implementations of network load balancers that Kubernetes does ship with are all glue code that calls out to various IaaS platforms (GCP, AWS, Azure…). If you’re not running on a supported IaaS platform (GCP, AWS, Azure…), LoadBalancers will remain in the “pending” state indefinitely when created.
 
-Bare-metal cluster operators are left with two lesser tools to bring user traffic into their clusters, “NodePort” and “externalIPs” services. Both of these options have significant downsides for production use, which makes bare-metal clusters second-class citizens in the Kubernetes ecosystem.
+Configuration [MetalLB Configuration](./docs/METALLB_CONFIG.md)
 
-MetalLB aims to redress this imbalance by offering a network load balancer implementation that integrates with standard network equipment, so that external services on bare-metal clusters also “just work” as much as possible."
-https://metallb.io/
-
-If you want to find more about MetalLB configuration go to [MetalLB Configuration](./docs/METALLB_CONFIG.md)
+## Storage
+One USB 64GB Drive per Node for persistent volume to gather logs. This is managed by Longhorn tool.
+Configuration [Storage - Longhorn](./docs/STORAGE.md.md)
+![LonghornUI](./assets/longhorn/dashboard.jpg)
 
 ## Monitoring
-Who want's some cool looking dashboards? 
+Who want's some cool looking dashboards? Obviously Prometheus + Grafana
 
+### Prometheus
+Configuration [Prometheus](./docs/MONITORING.md.md)
+![Prometheus](./assets/prometheus/1.png)
+![Prometheus](./assets/prometheus/2.png)
+
+### Grafana
+Configuration [Grafana](./docs/GRAFANA.md)
+![Grafana](./assets/grafana/1.png)
 
 ## Automation
 For automation currently I'm using Ansible to configure and manage my nodes. When I'll provision AKS than I'll add automation for that part. 

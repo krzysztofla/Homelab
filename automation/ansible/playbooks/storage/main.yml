@@ -1,32 +1,72 @@
 ---
+# - hosts:
+#     - ziqqnode00
+#     - ziqqnode01
+#     - ziqqnode02
+#   remote_user: ziqq
+#   become: true
+
+#   tasks:
+
+#     - name: Install dependencies - storage management
+#       remote_user: ziqq
+#       become: true
+#       run_once: true
+#       apt:
+#         name: "{{item}}"
+#         state: present
+#         update_cache: yes
+#       loop:
+#         - nfs-common
+#         - open-iscsi
+#         - util-linux
+
+#     - name: List disk labels
+#       remote_user: ziqq
+#       become: true
+#       shell: |
+#         lsblk -f
+#       register: shell_info
+      
+#     - name: Display disks labels
+#       debug:
+#         var: shell_info.stdout_lines 
+
+
 - hosts:
-    - ziqqnode00
-    - ziqqnode01
-    - ziqqnode02
+  - ziqqnode01
+  - ziqqnode02
   remote_user: ziqq
   become: true
 
+  vars:
+    disk_name: "sda1"
+
   tasks:
+    
+    # - name: Wipes partition list
+    #   shell: |
+    #     wipefs -a /dev/{{ disk_name }}
+    
+    # - name: Format partition 
+    #   filesystem: 
+    #     fstype: ext4
+    #     dev: /dev/{{ disk_name }}
 
-    - name: Install dependencies - storage management
-      remote_user: ziqq
-      become: true
-      apt:
-        name: "{{item}}"
-        state: present
-        update_cache: yes
-      loop:
-        - nfs-common
-        - open-iscsi
-        - util-linux
+    - name: Mount storage
+      mount:
+        path: /storage
+        src: /dev/{{ disk_name }}
+        fstype: ext4
+        state: mounted
 
-    - name: List disk labels
+    - name: List disks labels after formating and creating partition
       remote_user: ziqq
       become: true
       shell: |
-        lsblk -f
+        lsblk -f 
       register: shell_info
-      
-    - name: Display disks labels
-      debug:
-        var: shell_info.stdout_lines 
+    
+    - name: Display disks new labels
+      debug: 
+        var: shell_info.stdout_lines
