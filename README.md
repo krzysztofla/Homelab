@@ -34,13 +34,20 @@ Configuration [MetalLB Configuration](./docs/METALLB_CONFIG.md)
 
 ## Storage
 One USB 64GB Drive per Node for persistent volume to gather logs. This is managed by Longhorn tool.
+Configuration [Storage - Longhorn](./docs/STORAGE.md.md)
 ![LonghornUI](./assets/longhorn/dashboard.jpg)
 
 ## Monitoring
 Who want's some cool looking dashboards? Obviously Prometheus + Grafana
+
 ### Prometheus
+Configuration [Prometheus](./docs/MONITORING.md.md)
 ![Prometheus](./assets/prometheus/1.png)
 ![Prometheus](./assets/prometheus/2.png)
+
+### Grafana
+Configuration [Grafana](./docs/GRAFANA.md)
+![Grafana](./assets/grafana/1.png)
 
 ## Automation
 For automation currently I'm using Ansible to configure and manage my nodes. When I'll provision AKS than I'll add automation for that part. 
